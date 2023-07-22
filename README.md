@@ -23,6 +23,7 @@ The web application allows users to receive personalized activity recommendation
 ## Setup and Installation
 
 1. Clone the repository: `git clone https://github.com/HowlingNorthWind/ZeroHeroes.git`
-2. Install the required dependencies: `pip install -r requirements.txt`
+2. Install the required dependencies: `pip install -r requirements.txt`.  
+ This contains all packages in my deep learning environment. You may want to install packages mannually.  
 3. Run the application: `python run.py`
 4. Access the web application through the browser at `http://localhost:5000`

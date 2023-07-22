@@ -3,7 +3,7 @@ from sklearn.preprocessing import LabelEncoder
 
 from surprise import Dataset, Reader
 from surprise import KNNBasic
-from surprise.model_selection import cross_validate
+# from surprise.model_selection import cross_validate
 
 from collections import defaultdict
 
@@ -11,14 +11,17 @@ import numpy as np
 import tensorflow as tf
 from sklearn.model_selection import train_test_split
 
-# Weightage for each item
-weightage_dict = {
-    'item1': 0.5,
-    'item2': 0.7,
-    'item3': 1.0,
-    'item4': 0.3,
-    'item5': 0.9,
-}
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+
+# # Weightage for each item
+# weightage_dict = {
+#     'item1': 0.5,
+#     'item2': 0.7,
+#     'item3': 1.0,
+#     'item4': 0.3,
+#     'item5': 0.9,
+# }
 
 
 def get_top_n(predictions, n=10):
@@ -49,7 +52,7 @@ def get_top_n(predictions, n=10):
 
 def get_data_for_recommendation():
         # User ID, Item ID, Rating, City
-    data = [
+    data_0 = [
         ['user1', 'item1', 4.0, 'Redlands'],
         ['user1', 'item2', 3.0, 'Redlands'],
         ['user1', 'item3', 5.0, 'Redlands'],
@@ -60,27 +63,53 @@ def get_data_for_recommendation():
         ['user3', 'item3', 3.0, 'Chicago'],
         ['user3', 'item4', 4.0, 'Chicago'],
     ]
-    return data
+    data_1 = [
+        ['user1', 'item1', 4.0],
+        ['user1', 'item2', 3.0],
+        ['user1', 'item3', 5.0],
+        ['user2', 'item1', 3.0],
+        ['user2', 'item4', 2.0],
+        ['user2', 'item5', 4.0],
+        ['user3', 'item2', 3.0],
+        ['user3', 'item3', 3.0],
+        ['user3', 'item4', 4.0],
+    ]
+    data_2 = [
+        ['user1', 1, 4.0],
+        ['user1', 2, 3.0],
+        ['user1', 3, 5.0],
+        ['user2', 1, 3.0],
+        ['user2', 4, 2.0],
+        ['user2', 5, 4.0],
+        ['user3', 2, 3.0],
+        ['user3', 3, 3.0],
+        ['user3', 4, 4.0],
+    ]
+    
+    return data_2
 
+# top_n = defaultdict(list)
 
 def recommend_knn(user_id):
 
     data = get_data_for_recommendation()
 
     # Convert data to DataFrame
-    df = pd.DataFrame(data, columns=['user', 'item', 'rating', 'city'])
+    # df = pd.DataFrame(data, columns=['user', 'item', 'rating', 'city'])
+    df = pd.DataFrame(data, columns=['user', 'item', 'rating'])
 
     # Encode 'city' as categorical feature
-    encoder = LabelEncoder()
-    df['city'] = encoder.fit_transform(df['city'])
+    # encoder = LabelEncoder()
+    # df['city'] = encoder.fit_transform(df['city'])
 
     # Apply weightage to rating
-    df['rating'] = df.apply(lambda row: row['rating'] * weightage_dict[row['item']], axis=1)
+    # df['rating'] = df.apply(lambda row: row['rating'] * weightage_dict[row['item']], axis=1)
 
     # Define a reader with the scale/limit of the ratings
-    min_rating = df['rating'].min()
-    max_rating = df['rating'].max()
-    reader = Reader(rating_scale=(min_rating, max_rating))
+    # min_rating = df['rating'].min()
+    # max_rating = df['rating'].max()
+    # reader = Reader(rating_scale=(min_rating, max_rating))
+    reader = Reader(rating_scale=(0, 5))
 
     # Load data from data frame
     data = Dataset.load_from_df(df[['user', 'item', 'rating']], reader)
@@ -106,19 +135,26 @@ def recommend_knn(user_id):
     return [iid for (iid, _) in top_n[user_id]]
 
 
+# def get_recommendation_data_knn(user_id):
+#     recommend_knn(user_id)
+#     return top_n[user_id]
+
+# recommendations = {}
+
 def recommend_dl(user_id):
 
     data = get_data_for_recommendation()
 
     # Convert data to DataFrame
-    df = pd.DataFrame(data, columns=['user', 'item', 'rating', 'city'])
+    # df = pd.DataFrame(data, columns=['user', 'item', 'rating', 'city'])
+    df = pd.DataFrame(data, columns=['user', 'item', 'rating'])
 
     # Encode 'city' as categorical feature
-    encoder = LabelEncoder()
-    df['city'] = encoder.fit_transform(df['city'])
+    # encoder = LabelEncoder()
+    # df['city'] = encoder.fit_transform(df['city'])
 
     # Apply weightage to rating
-    df['rating'] = df.apply(lambda row: row['rating'] * weightage_dict[row['item']], axis=1)
+    # df['rating'] = df.apply(lambda row: row['rating'] * weightage_dict[row['item']], axis=1)
 
     # Encode the categorical data
     user_encoder = LabelEncoder()
@@ -190,3 +226,15 @@ def recommend_dl(user_id):
     # Return the recommended items for the input user
     return [iid for iid in recommendations[user_id]]
 
+# def get_recommendation_data_dl(user_id):
+#     # refresh_recommendations_dl(user_id, None, None)
+#     recommend_dl(user_id)
+#     return recommendations[user_id]
+
+# def refresh_recommendations_knn(user, item, rating):
+#     recommend_knn(user)
+#     # return get_recommendation_data_knn(user)
+
+# def refresh_recommendations_dl(user, item, rating):
+#     recommend_dl(user)
+#     # return get_recommendation_data_dl(user)

@@ -12,6 +12,10 @@ from handlers.rating import give_rating
 
 from handlers.recommend import recommend_knn, recommend_dl
 
+@app.route('/api/hello')
+def hello():
+    return 'Hello, World!'
+
 @app.route('/api/get_recommendation_dl/<user_id>', methods=['GET'])
 def get_recommendation_dl_route(user_id):
     recommendations = recommend_dl(user_id)

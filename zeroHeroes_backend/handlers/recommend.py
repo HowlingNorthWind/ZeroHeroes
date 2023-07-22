@@ -11,8 +11,7 @@ import numpy as np
 import tensorflow as tf
 from sklearn.model_selection import train_test_split
 
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
+from handlers.rating import get_data_for_recommendation_from_database
 
 # # Weightage for each item
 # weightage_dict = {
@@ -50,49 +49,49 @@ def get_top_n(predictions, n=10):
 
     return top_n
 
-def get_data_for_recommendation():
-        # User ID, Item ID, Rating, City
-    data_0 = [
-        ['user1', 'item1', 4.0, 'Redlands'],
-        ['user1', 'item2', 3.0, 'Redlands'],
-        ['user1', 'item3', 5.0, 'Redlands'],
-        ['user2', 'item1', 3.0, 'Los Angeles'],
-        ['user2', 'item4', 2.0, 'Los Angeles'],
-        ['user2', 'item5', 4.0, 'Los Angeles'],
-        ['user3', 'item2', 3.0, 'Chicago'],
-        ['user3', 'item3', 3.0, 'Chicago'],
-        ['user3', 'item4', 4.0, 'Chicago'],
-    ]
-    data_1 = [
-        ['user1', 'item1', 4.0],
-        ['user1', 'item2', 3.0],
-        ['user1', 'item3', 5.0],
-        ['user2', 'item1', 3.0],
-        ['user2', 'item4', 2.0],
-        ['user2', 'item5', 4.0],
-        ['user3', 'item2', 3.0],
-        ['user3', 'item3', 3.0],
-        ['user3', 'item4', 4.0],
-    ]
-    data_2 = [
-        ['user1', 1, 4.0],
-        ['user1', 2, 3.0],
-        ['user1', 3, 5.0],
-        ['user2', 1, 3.0],
-        ['user2', 4, 2.0],
-        ['user2', 5, 4.0],
-        ['user3', 2, 3.0],
-        ['user3', 3, 3.0],
-        ['user3', 4, 4.0],
-    ]
+# def get_data_for_recommendation():
+#         # User ID, Item ID, Rating, City
+#     data_0 = [
+#         ['user1', 'item1', 4.0, 'Redlands'],
+#         ['user1', 'item2', 3.0, 'Redlands'],
+#         ['user1', 'item3', 5.0, 'Redlands'],
+#         ['user2', 'item1', 3.0, 'Los Angeles'],
+#         ['user2', 'item4', 2.0, 'Los Angeles'],
+#         ['user2', 'item5', 4.0, 'Los Angeles'],
+#         ['user3', 'item2', 3.0, 'Chicago'],
+#         ['user3', 'item3', 3.0, 'Chicago'],
+#         ['user3', 'item4', 4.0, 'Chicago'],
+#     ]
+#     data_1 = [
+#         ['user1', 'item1', 4.0],
+#         ['user1', 'item2', 3.0],
+#         ['user1', 'item3', 5.0],
+#         ['user2', 'item1', 3.0],
+#         ['user2', 'item4', 2.0],
+#         ['user2', 'item5', 4.0],
+#         ['user3', 'item2', 3.0],
+#         ['user3', 'item3', 3.0],
+#         ['user3', 'item4', 4.0],
+#     ]
+#     data_2 = [
+#         ['user1', 1, 4.0],
+#         ['user1', 2, 3.0],
+#         ['user1', 3, 5.0],
+#         ['user2', 1, 3.0],
+#         ['user2', 4, 2.0],
+#         ['user2', 5, 4.0],
+#         ['user3', 2, 3.0],
+#         ['user3', 3, 3.0],
+#         ['user3', 4, 4.0],
+#     ]
     
-    return data_2
+#     return data_2
 
 # top_n = defaultdict(list)
 
 def recommend_knn(user_id):
 
-    data = get_data_for_recommendation()
+    data = get_data_for_recommendation_from_database()
 
     # Convert data to DataFrame
     # df = pd.DataFrame(data, columns=['user', 'item', 'rating', 'city'])
@@ -143,7 +142,7 @@ def recommend_knn(user_id):
 
 def recommend_dl(user_id):
 
-    data = get_data_for_recommendation()
+    data = get_data_for_recommendation_from_database()
 
     # Convert data to DataFrame
     # df = pd.DataFrame(data, columns=['user', 'item', 'rating', 'city'])

@@ -3,20 +3,18 @@
 
 from flask import jsonify, request
 from app import app
-from handlers.get_users import get_data
-from handlers.recommend import recommend_knn, recommend_dl
-# from handlers.set_user_interests import set_interests
+
 from handlers.user_interests import set_interests
-# from handlers.get_events_list import get_events
-# from handlers.join_an_event import join_event
-# from handlers.create_an_event import create_event
 
 from handlers.events import get_events, join_event, create_event
 
-# Define your API endpoints and route handlers here.
-@app.route('/api/data', methods=['GET'])
-def get_data_route():
-    return get_data()
+from handlers.rating import give_rating
+
+from handlers.recommend import recommend_knn, recommend_dl
+
+@app.route('/api/hello')
+def hello():
+    return 'Hello, World!'
 
 @app.route('/api/get_recommendation_dl/<user_id>', methods=['GET'])
 def get_recommendation_dl_route(user_id):
@@ -34,6 +32,10 @@ def get_recommendation_knn_route(user_id):
     # return recommend_dl(user_id)
 
 app.route('/api/set_interests', methods=['POST'])(set_interests)  # Register the function as a route
+
+app.route('/api/give_rating', methods=['POST'])(give_rating)  # Register the function as a route
+
+# app.route('/api/init_recommendation_data', methods=['POST'])(init_recommendation_data)  # Register the function as a route
 
 @app.route('/api/get_events', methods=['GET'])
 def events_route():

@@ -148,11 +148,9 @@ def register_users(data):
         for user_data in data:
             user_id = user_data[0]
 
-            # 检查用户是否已经存在
             existing_user = session.query(User).filter(User.id == user_id).first()
 
             if not existing_user:
-                # 用户不存在，进行注册
                 user = User(id=user_id)
                 session.add(user)
 

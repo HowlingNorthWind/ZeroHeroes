@@ -3,7 +3,6 @@
 
 from flask import jsonify, request
 from app import app
-from handlers.get_users import get_data
 
 from handlers.user_interests import set_interests
 

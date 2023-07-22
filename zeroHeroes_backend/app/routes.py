@@ -11,10 +11,6 @@ from handlers.events import get_events, join_event, create_event
 from handlers.rating import give_rating
 
 from handlers.recommend import recommend_knn, recommend_dl
-# Define your API endpoints and route handlers here.
-@app.route('/api/data', methods=['GET'])
-def get_data_route():
-    return get_data()
 
 @app.route('/api/get_recommendation_dl/<user_id>', methods=['GET'])
 def get_recommendation_dl_route(user_id):

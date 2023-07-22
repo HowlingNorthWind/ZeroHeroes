@@ -117,7 +117,7 @@ def get_data_for_recommendation_from_database():
     return data
 
 
-def give_rating(user_id, activity, rating):
+def give_rating_with_args(user_id, activity, rating):
     session = Session()
 
     try:
@@ -185,6 +185,6 @@ def init_recommendation_data():
 
     for record in data_2:
         user_id, activity, rating = record
-        give_rating(user_id, activity, rating)
+        give_rating_with_args(user_id, activity, rating)
 
-    return jsonify({'message': 'Data insertion successful'}), 200
+init_recommendation_data()

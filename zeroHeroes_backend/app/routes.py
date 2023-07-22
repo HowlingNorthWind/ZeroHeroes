@@ -9,7 +9,8 @@ from handlers.user_interests import set_interests
 
 from handlers.events import get_events, join_event, create_event
 
-from handlers.rating import give_rating, init_recommendation_data
+from handlers.rating import give_rating
+
 from handlers.recommend import recommend_knn, recommend_dl
 # Define your API endpoints and route handlers here.
 @app.route('/api/data', methods=['GET'])
@@ -35,7 +36,7 @@ app.route('/api/set_interests', methods=['POST'])(set_interests)  # Register the
 
 app.route('/api/give_rating', methods=['POST'])(give_rating)  # Register the function as a route
 
-app.route('/api/init_recommendation_data', methods=['POST'])(init_recommendation_data)  # Register the function as a route
+# app.route('/api/init_recommendation_data', methods=['POST'])(init_recommendation_data)  # Register the function as a route
 
 @app.route('/api/get_events', methods=['GET'])
 def events_route():

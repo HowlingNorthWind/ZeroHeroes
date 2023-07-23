@@ -5,12 +5,10 @@ from flask import jsonify, request
 from app import app
 
 from handlers.user_interests import set_interests
-
 from handlers.events import get_events, join_event, create_event
-
 from handlers.rating import give_rating
-
 from handlers.recommend import recommend_knn, recommend_dl
+from handlers.tips import get_tips
 
 @app.route('/api/hello')
 def hello():
@@ -19,16 +17,20 @@ def hello():
 @app.route('/api/get_recommendation_dl/<user_id>', methods=['GET'])
 def get_recommendation_dl_route(user_id):
     recommendations = recommend_dl(user_id)
+    tips = get_tips(recommendations)
+    return jsonify({'recommendations': recommendations, 'tips': tips})
     # Convert the NumPy int64 data to Python integers using .tolist()
-    recommendations = [int(item) for item in recommendations]
-    return jsonify({'recommendations': recommendations})
+    # recommendations = [int(item) for item in recommendations]
+    # return jsonify({'recommendations': recommendations})
 
 @app.route('/api/get_recommendation_knn/<user_id>', methods=['GET'])
 def get_recommendation_knn_route(user_id):
     recommendations = recommend_knn(user_id)
     # Convert the NumPy int64 data to Python integers using .tolist()
-    recommendations = [int(item) for item in recommendations]
-    return jsonify({'recommendations': recommendations})
+    # recommendations = [int(item) for item in recommendations]
+    tips = get_tips(recommendations)
+    return jsonify({'recommendations': recommendations, 'tips': tips})
+    # return jsonify({'recommendations': recommendations})
     # return recommend_dl(user_id)
 
 app.route('/api/set_interests', methods=['POST'])(set_interests)  # Register the function as a route

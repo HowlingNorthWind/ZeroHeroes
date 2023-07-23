@@ -59,6 +59,6 @@ The mobile application allows users to receive personalized activity recommendat
 2. Create a new conda environment: `conda create --name ZeroHeroes`
 3. Switch to the new conda environment: `conda activate ZeroHeroes`
 4. Install the required dependencies: `pip install -r requirements.txt`
-5. Enter the backend folder:  `cd backend`
+5. Enter the backend folder:  `cd zeroHeroes_backend`
 6. Run the application: `python run.py`
 7. Access the web application through the browser at `http://localhost:5000`

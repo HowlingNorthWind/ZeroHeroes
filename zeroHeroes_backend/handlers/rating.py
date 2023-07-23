@@ -15,7 +15,7 @@ class Rating(Base):
 
     id = Column(Integer, primary_key=True)
     user_id = Column(String(50), ForeignKey('users.id'))
-    activity = Column(Integer)
+    activity = Column(String(50)) 
     rating = Column(Integer)
 
 # Configure the database engine
@@ -166,15 +166,15 @@ def register_users(data):
 
 def init_recommendation_data():
     data_2 = [
-        ['user1', 1, 4.0],
-        ['user1', 2, 3.0],
-        ['user1', 3, 5.0],
-        ['user2', 1, 3.0],
-        ['user2', 4, 2.0],
-        ['user2', 5, 4.0],
-        ['user3', 2, 3.0],
-        ['user3', 3, 3.0],
-        ['user3', 4, 4.0],
+        ['user1', 'Nature Noshing', 4.0],
+        ['user1', 'Waste Warriors', 3.0],
+        ['user1', 'Upcycle Palooza', 5.0],
+        ['user2', 'Nature Noshing', 3.0],
+        ['user2', 'Compost Champions', 2.0],
+        ['user2', 'Canopy Crusaders', 4.0],
+        ['user3', 'Waste Warriors', 3.0],
+        ['user3', 'Upcycle Palooza', 3.0],
+        ['user3', 'Compost Champions', 4.0]
     ]
     # First, let's register all the users
     user_ids = set(record[0] for record in data_2)

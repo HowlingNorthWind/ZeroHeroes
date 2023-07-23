@@ -55,6 +55,7 @@ The mobile application allows users to receive personalized activity recommendat
 
 ## Setup and Installation
 
+0. Set up your MySQL: username: `root` password: `password123` dbname:`zero_heroes`
 1. Clone the repository: `git clone https://github.com/HowlingNorthWind/ZeroHeroes.git`
 2. Create a new conda environment: `conda create --name ZeroHeroes`
 3. Switch to the new conda environment: `conda activate ZeroHeroes`

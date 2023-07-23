@@ -56,7 +56,9 @@ The mobile application allows users to receive personalized activity recommendat
 ## Setup and Installation
 
 1. Clone the repository: `git clone https://github.com/HowlingNorthWind/ZeroHeroes.git`
-2. Install the required dependencies: `pip install -r requirements.txt`.  
- This contains all packages in my deep learning environment. You may want to install packages mannually.  
-3. Run the application: `python run.py`
-4. Access the web application through the browser at `http://localhost:5000`
+2. Create a new conda environment: `conda create --name ZeroHeroes`
+3. Switch to the new conda environment: `conda activate ZeroHeroes`
+4. Install the required dependencies: `pip install -r requirements.txt`
+5. Enter the backend folder:  `cd backend`
+6. Run the application: `python run.py`
+7. Access the web application through the browser at `http://localhost:5000`

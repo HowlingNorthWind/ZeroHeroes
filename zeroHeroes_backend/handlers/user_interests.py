@@ -17,7 +17,7 @@ class UserInterest(Base):
 
     id = Column(Integer, primary_key=True)
     user_id = Column(String(50), ForeignKey('users.id'))
-    interest = Column(Integer) 
+    interest = Column(String(50)) 
 
 # Set up SQLAlchemy engine and session
 engine = create_engine('mysql+mysqlconnector://root:password123@localhost/zero_heroes')
